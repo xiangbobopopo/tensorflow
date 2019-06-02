@@ -9,7 +9,6 @@ train, test, validation
 import tensorflow  as  tf
 import  numpy  as  np
 import matplotlib.pyplot as plt
-
 import pylab 
 
 from tensorflow.examples.tutorials.mnist import input_data
@@ -19,7 +18,7 @@ trainimg=mnist.train.images
 trainimg_labels=mnist.train.labels
 testimg=mnist.test.images
 testimg_labels=mnist.test.labels
-
+print("mnist loaded successfully")
 #initialization
 x=tf.placeholder("float",[None, 784])
 y=tf.placeholder("float",[None,10])
@@ -30,12 +29,12 @@ active=tf.nn.softmax(tf.matmul(x,W)+b)
 #costfunction
 cost=tf.reduce_mean(-tf.reduce_sum(y*tf.log(active),reduction_indices=1))
 #optimizer
-learning_rate=0.03
+learning_rate=0.01
 optimizer=tf.train.GradientDescentOptimizer(learning_rate).minimize(cost)
 #prediction
-pre = tf.equal(tf.arg_max(active,1),tf.argmax(y,1))
+pre = tf.equal(tf.argmax(active,1),tf.argmax(y,1))
 #accuracy
-accr=tf.cast(pre,float)
+accr=tf.reduce_mean(tf.cast(pre,float))
 #init
 init=tf.global_variables_initializer()
 
@@ -49,14 +48,17 @@ sess.run(init)
 for epoch in range(training_epoch):
     avg_cost=0.
     num_batch=int(mnist.train.num_examples/batch_size)
-    
-
-
-
-print("mnist loaded successfully")
-print(testimg.shape)
-print(testimg_labels.shape)
-print(trainimg.shape)
-print(trainimg_labels.shape)
-print(trainimg_labels[0])
-
+    #calculation
+    for i in range(num_batch):
+        batch_xs, batch_ys=mnist.train.next_batch(batch_size)
+        sess.run(optimizer,feed_dict={x:batch_xs,y:batch_ys})
+        feeds={x:batch_xs,y:batch_ys}
+        avg_cost+=sess.run(cost,feed_dict=feeds)/num_batch        
+    #display
+    if epoch % display_step==0:
+        feeds_train = {x:batch_xs, y:batch_ys}
+        feeds_test={x:mnist.test.images,y:mnist.test.labels}
+        train_acc=sess.run(accr,feed_dict=feeds_train)
+        test_acc=sess.run(accr,feed_dict=feeds_test)
+        print(epoch,training_epoch,avg_cost,train_acc,test_acc)
+    print("done")
