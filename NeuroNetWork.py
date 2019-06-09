@@ -22,7 +22,6 @@ y=tf.placeholder("float",[None,n_output])
 
 #hereby i define the parameters in the hidden layers
 stddev=0.1
-
 weights={
         "w1":tf.Variable(tf.random_normal([n_input,n_hidden1],stddev=stddev)),
         "w2":tf.Variable(tf.random_normal([n_hidden1,n_hidden2],stddev=stddev)),
@@ -49,7 +48,7 @@ accr=tf.reduce_mean(tf.cast(corr,"float"))
 tf.global_variables_initializer()
 print("functions are ready")
 
-training_epochs=100
+training_epochs=200
 batch_size=100
 display_step=4
 sess=tf.Session()

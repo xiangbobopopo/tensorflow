@@ -31,10 +31,10 @@ cost=tf.reduce_mean(-tf.reduce_sum(y*tf.log(active),reduction_indices=1))
 #optimizer
 learning_rate=0.01
 optimizer=tf.train.GradientDescentOptimizer(learning_rate).minimize(cost)
-#prediction
+#prediction，用于比较计算值与真实值是否相等
 pre = tf.equal(tf.argmax(active,1),tf.argmax(y,1))
 #accuracy
-accr=tf.reduce_mean(tf.cast(pre,float))
+accr=tf.reduce_mean(tf.cast(pre,float)) 
 #init
 init=tf.global_variables_initializer()
 
