@@ -48,7 +48,7 @@ accr=tf.reduce_mean(tf.cast(corr,"float"))
 tf.global_variables_initializer()
 print("functions are ready")
 
-training_epochs=200
+training_epochs=100
 batch_size=100
 display_step=4
 sess=tf.Session()

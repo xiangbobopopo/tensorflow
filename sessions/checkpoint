@@ -1,0 +1,2 @@
+model_checkpoint_path: "D:/13pythoncode/tensorflow/sessions/mnist.ckpt"
+all_model_checkpoint_paths: "D:/13pythoncode/tensorflow/sessions/mnist.ckpt"
