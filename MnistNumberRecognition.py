@@ -37,7 +37,7 @@ pre = tf.equal(tf.argmax(active,1),tf.argmax(y,1))
 accr=tf.reduce_mean(tf.cast(pre,float)) 
 
 #training batch setup 
-training_epoch = 20
+training_epoch = 50
 batch_size = 100
 display_step = 1
 
@@ -57,7 +57,7 @@ with tf.Session() as sess:
             test_acc=sess.run(accr,feed_dict={x:mnist.test.images,y:mnist.test.labels})
             print(epoch,training_epoch,avg_cost,train_acc,test_acc)
         print("done")
-    saver.save(sess,path+"mnist.ckpt")    
+    saver.save(sess,path+"mnist.ckpt")
 print("run the second round...")
 
 
@@ -75,22 +75,6 @@ with tf.Session() as sess:
     im=im.reshape(-1,28)
     pylab.imshow(im)
     pylab.show()
-    
-    im=batch_xs[1]
-    im=im.reshape(-1,28)
-    pylab.imshow(im)
-    pylab.show()
-    
-    im=batch_xs[2]
-    im=im.reshape(-1,28)
-    pylab.imshow(im)
-    pylab.show()
-    
-    im=batch_xs[3]
-    im=im.reshape(-1,28)
-    pylab.imshow(im)
-    pylab.show()
-
 
 
 
